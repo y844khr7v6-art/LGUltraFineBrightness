@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
-
+    android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true">
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp">
-
         <TextView android:id="@+id/title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="LG UltraFine Brightness" android:textAppearance="?attr/textAppearanceHeadline5" android:textStyle="bold" />
         <TextView android:id="@+id/status" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Looking for 043e:9a63…" android:textAppearance="?attr/textAppearanceBody1" />
 
@@ -23,25 +19,27 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.button.MaterialButton android:id="@+id/read" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Read Brightness" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/reconnect" style="@style/Widget.MaterialComponents.Button.OutlinedButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Reconnect / Request USB Permission" />
-
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:text="Ambient Light Sensor" android:textAppearance="?attr/textAppearanceHeadline6" android:textStyle="bold" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:text="Auto ALS" android:textAppearance="?attr/textAppearanceHeadline6" android:textStyle="bold" />
         <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" app:cardUseCompatPadding="true">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="20dp">
                 <TextView android:id="@+id/alsValue" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:text="— lux" android:textAppearance="?attr/textAppearanceHeadline4" android:textStyle="bold" />
-                <TextView android:id="@+id/alsRaw" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:gravity="center" android:text="Interface 2 · waiting" android:textAppearance="?attr/textAppearanceCaption" />
-                <com.google.android.material.button.MaterialButton android:id="@+id/alsLive" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Start Live ALS" />
+                <TextView android:id="@+id/alsRaw" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:text="Interface 2 · waiting" android:textAppearance="?attr/textAppearanceCaption" />
+                <TextView android:id="@+id/autoInfo" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:gravity="center" android:text="Manual · Day" android:textAppearance="?attr/textAppearanceBody2" />
+                <Spinner android:id="@+id/profileSpinner" android:layout_width="match_parent" android:layout_height="48dp" android:layout_marginTop="12dp" />
+                <com.google.android.material.button.MaterialButton android:id="@+id/autoToggle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Enable Auto ALS" />
+                <com.google.android.material.button.MaterialButton android:id="@+id/resetPreference" style="@style/Widget.MaterialComponents.Button.OutlinedButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Reset Learned Preference" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="While Auto is on, moving the brightness slider teaches the active profile your preferred brightness at the current light level." android:textAppearance="?attr/textAppearanceCaption" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:text="UltraFine HID Lab" android:textAppearance="?attr/textAppearanceHeadline6" android:textStyle="bold" />
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="v0.4 decodes HID ALS live over interrupt-IN. HID I2C remains strictly read-only while its vendor protocol is reverse-engineered." android:textAppearance="?attr/textAppearanceCaption" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/read" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Read Brightness" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/reconnect" style="@style/Widget.MaterialComponents.Button.OutlinedButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Reconnect / Request USB Permission" />
 
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:text="UltraFine HID Lab" android:textAppearance="?attr/textAppearanceHeadline6" android:textStyle="bold" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="v0.5: live ALS + adaptive brightness. HID I2C remains strictly read-only." android:textAppearance="?attr/textAppearanceCaption" />
         <com.google.android.material.button.MaterialButton android:id="@+id/probeAls" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Probe HID ALS · Interface 2" />
         <com.google.android.material.button.MaterialButton android:id="@+id/probeI2c" style="@style/Widget.MaterialComponents.Button.OutlinedButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Probe HID I2C · Interface 0" />
         <com.google.android.material.button.MaterialButton android:id="@+id/probeAll" style="@style/Widget.MaterialComponents.Button.TextButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Probe All Interfaces (Read-only)" />
-
         <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:layout_marginBottom="24dp" app:cardUseCompatPadding="true">
             <TextView android:id="@+id/probeOutput" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="180dp" android:padding="16dp" android:text="Connect the UltraFine to populate HID diagnostics." android:textIsSelectable="true" android:textSize="12sp" android:fontFamily="monospace" />
         </com.google.android.material.card.MaterialCardView>
