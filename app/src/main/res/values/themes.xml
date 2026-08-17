@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.LGUltraFineBrightness" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">?attr/colorPrimary</item>
-        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
         <item name="android:navigationBarColor">?attr/colorSurface</item>
         <item name="android:windowBackground">?attr/colorSurface</item>
     </style>
