@@ -4,6 +4,8 @@
     <application
         android:allowBackup="false"
         android:label="LG UltraFine Brightness"
+        android:icon="@drawable/ic_launcher_ultrafine"
+        android:roundIcon="@drawable/ic_launcher_ultrafine"
         android:theme="@style/Theme.LGUltraFineBrightness">
         <activity
             android:name=".MainActivity"
