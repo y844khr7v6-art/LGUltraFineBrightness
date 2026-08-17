@@ -10,8 +10,9 @@
         android:roundIcon="@drawable/ic_launcher_ultrafine"
         android:theme="@style/Theme.LGUltraFineBrightness">
 
+        <activity android:name=".MainActivity" android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".PatchedMainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,41 +25,19 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <meta-data
-                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
-                android:resource="@xml/device_filter" />
+            <meta-data android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" android:resource="@xml/device_filter" />
         </activity>
 
-        <service
-            android:name=".UltraFineService"
-            android:exported="false"
-            android:foregroundServiceType="connectedDevice" />
+        <service android:name=".UltraFineService" android:exported="false" android:foregroundServiceType="connectedDevice" />
+        <receiver android:name=".ControlReceiver" android:exported="false" />
 
-        <receiver
-            android:name=".ControlReceiver"
-            android:exported="false" />
-
-        <service
-            android:name=".AutoTileService"
-            android:label="UltraFine Auto"
-            android:icon="@drawable/ic_launcher_ultrafine"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE" />
-            </intent-filter>
+        <service android:name=".AutoTileService" android:label="UltraFine Auto" android:icon="@drawable/ic_launcher_ultrafine" android:permission="android.permission.BIND_QUICK_SETTINGS_TILE" android:exported="true">
+            <intent-filter><action android:name="android.service.quicksettings.action.QS_TILE" /></intent-filter>
             <meta-data android:name="android.service.quicksettings.ACTIVE_TILE" android:value="true" />
         </service>
 
-        <service
-            android:name=".ProfileTileService"
-            android:label="UltraFine Profile"
-            android:icon="@drawable/ic_launcher_ultrafine"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE" />
-            </intent-filter>
+        <service android:name=".ProfileTileService" android:label="UltraFine Profile" android:icon="@drawable/ic_launcher_ultrafine" android:permission="android.permission.BIND_QUICK_SETTINGS_TILE" android:exported="true">
+            <intent-filter><action android:name="android.service.quicksettings.action.QS_TILE" /></intent-filter>
             <meta-data android:name="android.service.quicksettings.ACTIVE_TILE" android:value="true" />
         </service>
     </application>
