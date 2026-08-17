@@ -6,7 +6,10 @@
     android:fillViewport="true">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp">
-        <TextView android:id="@+id/title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="LG UltraFine" android:textAppearance="?attr/textAppearanceHeadline5" android:textStyle="bold" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+            <TextView android:id="@+id/title" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="LG UltraFine" android:textAppearance="?attr/textAppearanceHeadline5" android:textStyle="bold" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/overflowMenu" style="@style/Widget.MaterialComponents.Button.TextButton" android:layout_width="48dp" android:layout_height="48dp" android:minWidth="0dp" android:padding="0dp" android:text="⋮" android:textSize="24sp" android:contentDescription="More options" />
+        </LinearLayout>
         <TextView android:id="@+id/status" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Looking for your UltraFine…" android:textAppearance="?attr/textAppearanceBody1" />
 
         <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" app:cardUseCompatPadding="true">
