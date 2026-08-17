@@ -10,7 +10,11 @@ android {
         applicationId 'com.lj.ultrafinebrightness'
         minSdk 26
         targetSdk 28
-        versionCode 1
-        versionName '0.1-test'
+        versionCode 2
+        versionName '0.2'
     }
+}
+
+dependencies {
+    implementation 'com.google.android.material:material:1.12.0'
 }
