@@ -5,63 +5,16 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="LG UltraFine Brightness"
-            android:textAppearance="?attr/textAppearanceHeadline5"
-            android:textStyle="bold" />
+        <TextView android:id="@+id/title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="LG UltraFine Brightness" android:textAppearance="?attr/textAppearanceHeadline5" android:textStyle="bold" />
+        <TextView android:id="@+id/status" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Looking for 043e:9a63…" android:textAppearance="?attr/textAppearanceBody1" />
 
-        <TextView
-            android:id="@+id/status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Looking for 043e:9a63…"
-            android:textAppearance="?attr/textAppearanceBody1" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:cardUseCompatPadding="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
-
-                <TextView
-                    android:id="@+id/value"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="50%"
-                    android:textAppearance="?attr/textAppearanceHeadline4"
-                    android:textStyle="bold" />
-
-                <SeekBar
-                    android:id="@+id/slider"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:max="100"
-                    android:progress="50" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
-
+        <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" app:cardUseCompatPadding="true">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="20dp">
+                <TextView android:id="@+id/value" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:text="50%" android:textAppearance="?attr/textAppearanceHeadline4" android:textStyle="bold" />
+                <SeekBar android:id="@+id/slider" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:max="100" android:progress="50" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="horizontal">
                     <com.google.android.material.button.MaterialButton android:id="@+id/b25" style="@style/Widget.MaterialComponents.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="25%" />
                     <com.google.android.material.button.MaterialButton android:id="@+id/b50" style="@style/Widget.MaterialComponents.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="50%" />
                     <com.google.android.material.button.MaterialButton android:id="@+id/b75" style="@style/Widget.MaterialComponents.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="75%" />
@@ -70,73 +23,27 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/read"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Read Brightness" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/read" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Read Brightness" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/reconnect" style="@style/Widget.MaterialComponents.Button.OutlinedButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Reconnect / Request USB Permission" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/reconnect"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Reconnect / Request USB Permission" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:text="Ambient Light Sensor" android:textAppearance="?attr/textAppearanceHeadline6" android:textStyle="bold" />
+        <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" app:cardUseCompatPadding="true">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="20dp">
+                <TextView android:id="@+id/alsValue" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:text="— lux" android:textAppearance="?attr/textAppearanceHeadline4" android:textStyle="bold" />
+                <TextView android:id="@+id/alsRaw" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:gravity="center" android:text="Interface 2 · waiting" android:textAppearance="?attr/textAppearanceCaption" />
+                <com.google.android.material.button.MaterialButton android:id="@+id/alsLive" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Start Live ALS" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="UltraFine HID Lab"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            android:textStyle="bold" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:text="UltraFine HID Lab" android:textAppearance="?attr/textAppearanceHeadline6" android:textStyle="bold" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="v0.4 decodes HID ALS live over interrupt-IN. HID I2C remains strictly read-only while its vendor protocol is reverse-engineered." android:textAppearance="?attr/textAppearanceCaption" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="v0.3 probes interface 0 (HID I2C) and interface 2 (HID ALS) with reads only. It does not send I2C writes."
-            android:textAppearance="?attr/textAppearanceCaption" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/probeAls" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Probe HID ALS · Interface 2" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/probeI2c" style="@style/Widget.MaterialComponents.Button.OutlinedButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Probe HID I2C · Interface 0" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/probeAll" style="@style/Widget.MaterialComponents.Button.TextButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Probe All Interfaces (Read-only)" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/probeAls"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Probe HID ALS · Interface 2" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/probeI2c"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Probe HID I2C · Interface 0" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/probeAll"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Probe All Interfaces (Read-only)" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="24dp"
-            app:cardUseCompatPadding="true">
-
-            <TextView
-                android:id="@+id/probeOutput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="180dp"
-                android:padding="16dp"
-                android:text="Connect the UltraFine to populate HID diagnostics."
-                android:textIsSelectable="true"
-                android:textSize="12sp"
-                android:fontFamily="monospace" />
+        <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:layout_marginBottom="24dp" app:cardUseCompatPadding="true">
+            <TextView android:id="@+id/probeOutput" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="180dp" android:padding="16dp" android:text="Connect the UltraFine to populate HID diagnostics." android:textIsSelectable="true" android:textSize="12sp" android:fontFamily="monospace" />
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </ScrollView>
