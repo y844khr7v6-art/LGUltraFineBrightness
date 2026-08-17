@@ -62,37 +62,10 @@
                     android:layout_marginTop="8dp"
                     android:orientation="horizontal">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/b25"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="25%" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/b50"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="50%" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/b75"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="75%" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/b100"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="100%" />
+                    <com.google.android.material.button.MaterialButton android:id="@+id/b25" style="@style/Widget.MaterialComponents.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="25%" />
+                    <com.google.android.material.button.MaterialButton android:id="@+id/b50" style="@style/Widget.MaterialComponents.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="50%" />
+                    <com.google.android.material.button.MaterialButton android:id="@+id/b75" style="@style/Widget.MaterialComponents.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="75%" />
+                    <com.google.android.material.button.MaterialButton android:id="@+id/b100" style="@style/Widget.MaterialComponents.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="100%" />
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -114,8 +87,56 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Theme follows the system automatically. Brightness updates live while dragging."
+            android:layout_marginTop="24dp"
+            android:text="UltraFine HID Lab"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="v0.3 probes interface 0 (HID I2C) and interface 2 (HID ALS) with reads only. It does not send I2C writes."
             android:textAppearance="?attr/textAppearanceCaption" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/probeAls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Probe HID ALS · Interface 2" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/probeI2c"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Probe HID I2C · Interface 0" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/probeAll"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Probe All Interfaces (Read-only)" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            app:cardUseCompatPadding="true">
+
+            <TextView
+                android:id="@+id/probeOutput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="180dp"
+                android:padding="16dp"
+                android:text="Connect the UltraFine to populate HID diagnostics."
+                android:textIsSelectable="true"
+                android:textSize="12sp"
+                android:fontFamily="monospace" />
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </ScrollView>
