@@ -28,10 +28,14 @@ public class MainActivity extends Activity {
     private UsbDevice device;
     private UsbDeviceConnection connection;
     private UsbInterface i2cInterface, brightnessInterface, alsInterface;
-    private TextView status,value,probeOutput;
+    private UsbEndpoint alsInEndpoint;
+    private TextView status,value,probeOutput,alsValue,alsRaw;
     private SeekBar slider;
+    private Button alsLiveButton;
     private final Handler handler=new Handler(Looper.getMainLooper());
     private boolean suppressSlider=false;
+    private volatile boolean alsRunning=false;
+    private Thread alsThread;
     private final Runnable pendingWrite=()->setBrightnessPercent(slider.getProgress(),false);
 
     private final BroadcastReceiver receiver=new BroadcastReceiver(){ public void onReceive(Context c,Intent i){
@@ -53,12 +57,14 @@ public class MainActivity extends Activity {
         super.onCreate(b);setContentView(R.layout.activity_main);
         usbManager=(UsbManager)getSystemService(Context.USB_SERVICE);
         status=findViewById(R.id.status);value=findViewById(R.id.value);slider=findViewById(R.id.slider);probeOutput=findViewById(R.id.probeOutput);
+        alsValue=findViewById(R.id.alsValue);alsRaw=findViewById(R.id.alsRaw);alsLiveButton=findViewById(R.id.alsLive);
         IntentFilter f=new IntentFilter(ACTION_USB_PERMISSION);f.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);f.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);registerReceiver(receiver,f);
         ((Button)findViewById(R.id.reconnect)).setOnClickListener(v->findAndConnect());
         ((Button)findViewById(R.id.read)).setOnClickListener(v->readBrightness());
         ((Button)findViewById(R.id.probeAls)).setOnClickListener(v->probeInterface(IF_ALS,"HID ALS"));
         ((Button)findViewById(R.id.probeI2c)).setOnClickListener(v->probeInterface(IF_I2C,"HID I2C"));
         ((Button)findViewById(R.id.probeAll)).setOnClickListener(v->probeAllReadOnly());
+        alsLiveButton.setOnClickListener(v->{if(alsRunning)stopAlsLive();else startAlsLive();});
         findViewById(R.id.b25).setOnClickListener(v->setBrightnessPercent(25,true));
         findViewById(R.id.b50).setOnClickListener(v->setBrightnessPercent(50,true));
         findViewById(R.id.b75).setOnClickListener(v->setBrightnessPercent(75,true));
@@ -88,6 +94,7 @@ public class MainActivity extends Activity {
         boolean b=connection.claimInterface(brightnessInterface,true);
         boolean i=i2cInterface!=null&&connection.claimInterface(i2cInterface,true);
         boolean a=alsInterface!=null&&connection.claimInterface(alsInterface,true);
+        if(a){for(int e=0;e<alsInterface.getEndpointCount();e++){UsbEndpoint ep=alsInterface.getEndpoint(e);if(ep.getDirection()==UsbConstants.USB_DIR_IN&&ep.getType()==UsbConstants.USB_ENDPOINT_XFER_INT){alsInEndpoint=ep;break;}}}
         if(!b){setStatus("Could not claim HID BRIGHTNESS interface 1");closeConnection();return;}
         setStatus("CONNECTED · brightness ✓ · I2C "+(i?"✓":"—")+" · ALS "+(a?"✓":"—"));
         handler.postDelayed(this::readBrightness,100);
@@ -96,6 +103,29 @@ public class MainActivity extends Activity {
 
     private void setBrightnessPercent(int p,boolean updateSlider){if(!readyBrightness())return;p=Math.max(0,Math.min(100,p));int raw=Math.round((p/100f)*MAX_RAW);byte[] r=new byte[6];r[0]=(byte)(raw&255);r[1]=(byte)((raw>>8)&255);int n=connection.controlTransfer(0x21,0x09,0x0300,brightnessInterface.getId(),r,6,1000);if(n==6){if(updateSlider){suppressSlider=true;slider.setProgress(p);suppressSlider=false;}value.setText(p+"%");setStatus("SET OK · "+p+"% · raw "+raw);}else setStatus("SET FAILED · controlTransfer returned "+n);}
     private void readBrightness(){if(!readyBrightness())return;byte[] r=new byte[6];int n=connection.controlTransfer(0xA1,0x01,0x0300,brightnessInterface.getId(),r,6,1000);if(n>=2){int raw=(r[0]&255)|((r[1]&255)<<8);int p=Math.max(0,Math.min(100,Math.round(raw*100f/MAX_RAW)));suppressSlider=true;slider.setProgress(p);suppressSlider=false;value.setText(p+"%");setStatus("READ OK · "+p+"% · raw "+raw);}else setStatus("READ FAILED · controlTransfer returned "+n);}
+
+    private void startAlsLive(){
+        if(connection==null||alsInterface==null||alsInEndpoint==null){setStatus("ALS interrupt-IN endpoint unavailable");return;}
+        if(alsRunning)return;
+        alsRunning=true;alsLiveButton.setText("Stop Live ALS");alsValue.setText("Listening…");
+        final UsbDeviceConnection c=connection;final UsbEndpoint ep=alsInEndpoint;
+        alsThread=new Thread(()->{
+            byte[] b=new byte[6];
+            while(alsRunning&&connection==c){
+                int n=c.bulkTransfer(ep,b,b.length,1200);
+                if(n>=6){
+                    int reportId=b[0]&255;int event=b[1]&255;
+                    long lux=((long)b[2]&255)|(((long)b[3]&255)<<8)|(((long)b[4]&255)<<16)|(((long)b[5]&255)<<24);
+                    final String eventName=event==1?"State Changed":event==2?"Data Updated":"event "+event;
+                    final String raw=toHex(b,n);
+                    handler.post(()->{alsValue.setText(lux+" lux");alsRaw.setText("Report "+reportId+" · "+eventName+" · "+raw);});
+                } else if(n<0&&alsRunning){handler.post(()->alsRaw.setText("Waiting for interrupt report…"));}
+            }
+        },"UltraFine-ALS");
+        alsThread.start();
+    }
+
+    private void stopAlsLive(){alsRunning=false;if(alsThread!=null)alsThread.interrupt();alsThread=null;if(alsLiveButton!=null)alsLiveButton.setText("Start Live ALS");}
 
     private void probeAllReadOnly(){
         if(connection==null)return;
@@ -134,6 +164,8 @@ public class MainActivity extends Activity {
                 if(n>0){s.append("    ").append(reportType==1?"INPUT":"FEATURE").append(" id=").append(reportId).append(" len=").append(n).append(" : ").append(toHex(b,n)).append("\n");found++;}
             }
         }
+        if(intf.getId()==IF_ALS)s.append("  decoded: report ID 1 = [event byte][uint32 LE illuminance in lux]\n");
+        if(intf.getId()==IF_I2C)s.append("  decoded: vendor page 0xFF00, raw 64-byte INPUT/OUTPUT/FEATURE reports; writes remain disabled\n");
         if(found==0)s.append("    no readable reports in IDs 0–15\n");
         s.append("\n");return s.toString();
     }
@@ -145,12 +177,12 @@ public class MainActivity extends Activity {
     private void setStatus(String s){status.setText(s);}
 
     private void closeConnection(){
-        handler.removeCallbacks(pendingWrite);
+        stopAlsLive();handler.removeCallbacks(pendingWrite);
         if(connection!=null){
             for(UsbInterface x:new UsbInterface[]{i2cInterface,brightnessInterface,alsInterface})if(x!=null)try{connection.releaseInterface(x);}catch(Exception ignored){}
             connection.close();
         }
-        connection=null;i2cInterface=null;brightnessInterface=null;alsInterface=null;
+        connection=null;i2cInterface=null;brightnessInterface=null;alsInterface=null;alsInEndpoint=null;
     }
     @Override protected void onResume(){super.onResume();if(connection==null)handler.postDelayed(this::findAndConnect,150);}
     @Override protected void onDestroy(){closeConnection();try{unregisterReceiver(receiver);}catch(Exception ignored){}super.onDestroy();}
